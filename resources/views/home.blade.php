@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 
 @section('content')
-    iniciando la tienda con pushed
+    <promotions :logged="{{ json_encode(auth()->check()) }}"></promotions>
 @endsection
