@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Events\UserCart;
+use App\Order;
+use App\OrderLine;
 use App\Product;
+use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class CartController extends Controller
 {
@@ -80,5 +84,49 @@ class CartController extends Controller
         session()->put('cart', $filtered);
         broadcast(new UserCart($filtered));
 
+    }
+
+    public function process()
+    {
+        if(request()->ajax()){
+            abort(401, 'access denid');
+        }
+
+        $cart = session('cart');
+        $success = true;
+
+
+        try{
+            DB::beginTransaction();
+            $order = Order::create([
+                'user_id' => auth()->id(),
+                'total' => $cart->sum(function ($product){
+                    return $product->prie * $product->qty;
+                })
+            ]);
+
+            $orderLines = [];
+            $cart->num(function ($product) use (&$orderLines, $order){
+                $orderLines[] = [
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'product_price' => $product->price,
+                    'qty' => $product->qty
+                ];
+            });
+            OrderLine::insert($orderLines);
+
+        }catch (\Exception $exception){
+            DB::rollBack();
+            $success = $exception->getMessage();
+        }
+
+        if($success === true){
+            DB::commit();
+            session()->put('car', new Collection);
+            broadcast(new UserCart(session('cart')));
+        }
+
+        return response()->json($success);
     }
 }
