@@ -97,6 +97,7 @@
                 });
             });
 
+            
             window.Echo.private(`cart-updated.${this.user_id}`).listen('UserCart', (e) => {
                 this.processing = true;
                 setTimeout(() => {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserCart;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,6 @@ class CartController extends Controller
         }
 
         session()->save();
+        broadcast(new UserCart($cart));
     }
 }
