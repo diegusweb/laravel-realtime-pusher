@@ -39,4 +39,30 @@ class CartController extends Controller
         session()->save();
         broadcast(new UserCart($cart));
     }
+
+    public function decrement()
+    {
+        if(! request()->ajax()){
+            abort(401, 'access denid');
+        }
+
+        $cart = session('cart');
+        $productId = request('productId');
+
+        $cart->map(function ($product) use ($productId){
+            if($product->id === $productId){
+                $product->qty -= 1;
+            }
+        });
+
+        session()->save();
+
+        $filtered = $cart->reject(function ($product){
+           return $product->qty < 1;
+        })->flatter();  //alidar un array
+
+        session()->put('cart', $filtered);
+        broadcast(new UserCart($filtered));
+
+    }
 }
