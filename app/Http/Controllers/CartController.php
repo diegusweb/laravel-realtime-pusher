@@ -59,7 +59,23 @@ class CartController extends Controller
 
         $filtered = $cart->reject(function ($product){
            return $product->qty < 1;
-        })->flatter();  //alidar un array
+        })->flatten();  //alidar un array
+
+        session()->put('cart', $filtered);
+        broadcast(new UserCart($filtered));
+
+    }
+
+    public function remove($productId){
+        if(! request()->ajax()){
+            abort(401, 'access denid');
+        }
+
+        $cart = session('cart');
+
+        $filtered = $cart->reject(function ($product) use ($productId){
+            return (int) $product->id === (int) $productId;
+        })->flatten();  //alidar un array
 
         session()->put('cart', $filtered);
         broadcast(new UserCart($filtered));
