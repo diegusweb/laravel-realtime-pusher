@@ -20,14 +20,17 @@
                                 style="margin-top: 15px"
                                 target="_blank"
                             >
-                                <img :alt="product.name" :src="`/products/${product.image}`" class="img-fluid" />
+
+                                <!--<img :alt="product.name" :src="`/products/${product.image}`" class="img-fluid" />-->
+                                <img :alt="product.name" src="images/empty.jpg" class="img-fluid" />
                             </a>
                             <a
                                 v-else
                                 @click.prevent="addProductInCart(product.id)"
                                 style="margin-top: 15px; cursor: pointer"
                             >
-                                <img :alt="product.name" :src="`/products/${product.image}`" class="img-fluid" />
+                                <!--<img :alt="product.name" :src="`/products/${product.image}`" class="img-fluid" />-->
+                                <img :alt="product.name" src="images/empty.jpg" class="img-fluid" />
                             </a>
 
                             <div class="text-center">
