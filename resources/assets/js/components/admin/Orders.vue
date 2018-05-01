@@ -12,7 +12,7 @@
                     <v-server-table ref="ordersTable" :columns="columns" url="/admin/orders/json" :options="options">
 
                         <div slot="status" slot-scope="props">
-                            <order-status :order="props.row"> </order-status>
+                                <order-status :order="props.row"> </order-status>
                         </div>
 
                         <div slot="total" slot-scope="props">
@@ -41,7 +41,7 @@
 
 <script>
     import OrderMixin from '../../mixins/order';
-    import OrderStatus from "../OrderStatus";
+     import OrderStatus from "../OrderStatus";
     export default {
         components: {OrderStatus},
         mixins: [OrderMixin],
