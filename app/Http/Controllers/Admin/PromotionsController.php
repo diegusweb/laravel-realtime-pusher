@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\PromotionAdded;
 use App\Http\Requests\PromotionRequest;
 use App\Promotion;
 use App\VueTables\EloquentVueTables;
@@ -32,6 +33,7 @@ class PromotionsController extends Controller
 
     public function store(PromotionRequest $promotionRequest){
         $promotion = Promotion::create($promotionRequest->input());
+        broadcast(new PromotionAdded($promotion))->toOthers();
         return back()->with('message', ['success', __('Promocion dada de alta correctamnee')]);
     }
 }

@@ -84,20 +84,20 @@
             }
         },
         mounted () {
-            window.Echo.channel('new-promotion').listen('.new-promotion-added', (e) => {
-                let promotion = e.promotion;
-                this.processing = true;
-                setTimeout(() => {
-                    this.promotions.push({
-                        id: promotion.id,
-                        productId: promotion.product.id,
-                        name: promotion.product.name,
-                        price: promotion.price,
-                        image: promotion.product.image
-                    });
-                    this.processing = false;
-                }, 1500);
-            });
+                window.Echo.channel('new-promotion').listen('.new-promotion-added', (e) => {
+                    let promotion = e.promotion;
+                    this.processing = true;
+                    setTimeout(() => {
+                        this.promotions.push({
+                            id: promotion.id,
+                            productId: promotion.product.id,
+                            name: promotion.product.name,
+                            price: promotion.price,
+                            image: promotion.product.image
+                        });
+                        this.processing = false;
+                    }, 1500);
+                });
 
             window.Echo.channel('promotion-deleted').listen('PromotionDeleted', (e) => {
                 let productId = e.productId;
