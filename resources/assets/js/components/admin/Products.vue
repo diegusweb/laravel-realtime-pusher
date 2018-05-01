@@ -77,6 +77,7 @@
                 window.location.href = `${process.env.MIX_APP_URL}/admin/products/create`;
             },
             removeProduct (product) {
+                console.log(product.id);
                 this.$http.delete(`/admin/products/${product.id}`, {
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -88,6 +89,7 @@
         }
     }
 </script>
+
 
 <style>
     .table-bordered>thead>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>tfoot>tr>td {
