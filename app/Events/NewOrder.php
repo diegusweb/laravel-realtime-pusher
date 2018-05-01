@@ -14,6 +14,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class NewOrder implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     /**
      * @var Order
      */
@@ -22,7 +23,7 @@ class NewOrder implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Order $order
      */
     public function __construct(Order $order)
     {
@@ -37,6 +38,6 @@ class NewOrder implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('new-order');
+        return new PrivateChannel('new-order');
     }
 }

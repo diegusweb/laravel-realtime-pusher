@@ -17,7 +17,7 @@ class ProductAdded implements ShouldBroadcast
     /**
      * @var Product
      */
-    private $product;
+    public $product;
 
     /**
      * Create a new event instance.

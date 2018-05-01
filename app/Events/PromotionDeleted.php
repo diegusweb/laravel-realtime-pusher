@@ -13,16 +13,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class PromotionDeleted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    /**
+     * @var
+     */
     public $productId;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $productId
      */
     public function __construct($productId)
     {
-        //
         $this->productId = $productId;
     }
 
