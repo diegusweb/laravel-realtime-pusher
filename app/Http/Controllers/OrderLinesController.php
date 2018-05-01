@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProcessingOrder;
+use App\Order;
 use App\OrderLine;
 use DB;
 use Illuminate\Http\Request;
