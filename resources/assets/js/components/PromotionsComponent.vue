@@ -99,17 +99,17 @@
                     }, 1500);
                 });
 
-            window.Echo.channel('promotion-deleted').listen('PromotionDeleted', (e) => {
-                let productId = e.productId;
-                this.processing = true;
-                setTimeout(() => {
-                    const promotionIndex = this.promotions.findIndex(p => p.productId === productId);
-                    if(promotionIndex > -1) {
-                        this.promotions.splice(promotionIndex, 1);
-                    }
-                    this.processing = false;
-                }, 1500);
-            })
+                window.Echo.channel('promotion-deleted').listen('PromotionDeleted', (e) => {
+                    let productId = e.productId;
+                    this.processing = true;
+                    setTimeout(() => {
+                        const promotionIndex = this.promotions.findIndex(p => p.productId === productId);
+                        if(promotionIndex > -1) {
+                            this.promotions.splice(promotionIndex, 1);
+                        }
+                        this.processing = false;
+                    }, 1500);
+                })
         }
     }
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\PromotionAdded;
+use App\Events\PromotionDeleted;
 use App\Http\Requests\PromotionRequest;
 use App\Promotion;
 use App\VueTables\EloquentVueTables;
@@ -35,5 +36,18 @@ class PromotionsController extends Controller
         $promotion = Promotion::create($promotionRequest->input());
         broadcast(new PromotionAdded($promotion))->toOthers();
         return back()->with('message', ['success', __('Promocion dada de alta correctamnee')]);
+    }
+
+    public function delete(Promotion $promotion){
+        if(\request()->ajax()){
+            try{
+                broadcast(new PromotionDeleted($promotion->product_id))->toOthers();
+                $promotion->delete();
+                return response()->json(['res' => 'success']);
+            }catch (\Exception $exception){
+                return response()->json(['res' => $exception->getMessage()], 400);
+            }
+        }
+        abort(400);
     }
 }
