@@ -125,7 +125,7 @@ class CartController extends Controller
             \DB::commit();
             session()->put('cart', new Collection);
             broadcast(new UserCart(session('cart')));
-            //broadcast(new NewOrder($order))->toOthers();
+            broadcast(new NewOrder($order))->toOthers();
         }
         return response()->json($success);
     }
